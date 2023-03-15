@@ -33,8 +33,20 @@ python main.py
 
 ## Train
 1. To faster convergence, we use the pre-trainned COCO 2017 weights. You can downlod it from [hear](https://drive.google.com/file/d/1GZyzJLB3FTcs8C7MpZRQWw44liYPyOMD/edit).
-2. Replace the first line of `configs/custom.yaml` - `best_rel_model.pth ` to `CenterNet2_R2-101-DCN-BiFPN_4x+4x_1560_ST.pth`.
+2. Replace the third line of `configs/custom.yaml` - `best_rel_model.pth` to `CenterNet2_R2-101-DCN-BiFPN_4x+4x_1560_ST.pth`.
 3. Run the command below.
 ```
 python main.py -t
 ```
+
+## Evaluation
+1. Finish either inference process or train process.
+2. move to `evaluation` folder.
+3. Run the comman below.
+```
+python eval.py --light --test_dir ../outputs/res --gt_dir /data/apollo/val/apollo_annot --res_file test.txt
+```
+
+## Results
+We achieved the state-of-the art on Apollocar3D dataset.
+![table](https://github.com/gywns6287/BAAM/blob/main/for_git/resutls.png)
