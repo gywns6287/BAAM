@@ -23,4 +23,4 @@ pip install "git+https://github.com/facebookresearch/pytorch3d.git"
 ```
 pip install -r requirement.txt
 ```
-3. Set directory referring [here](https://github.com/gywns6287/BAAM/blob/main/for_git/directory.md).
+3. Set data referring [here](https://github.com/gywns6287/BAAM/blob/main/for_git/directory.md).
