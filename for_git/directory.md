@@ -12,4 +12,6 @@ ${CODE Root}
             |-- images
 ```
 
-- Download annotation files to fill out `apollo_annot` [[hear](https://drive.google.com/file/d/1qCUdjJEnKS7jyXDVuDBO5wCYZFeo1VsY/view?usp=sharing)]
+- Download annotation files to fill in `apollo_annot` [[hear](https://drive.google.com/file/d/1qCUdjJEnKS7jyXDVuDBO5wCYZFeo1VsY/view?usp=sharing)].
+
+- Download image files to fill in `images` [[hear](https://apolloscape.auto/car_instance.html)].
