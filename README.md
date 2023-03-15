@@ -49,4 +49,4 @@ python eval.py --light --test_dir ../outputs/res --gt_dir /data/apollo/val/apoll
 
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
-![table](https://github.com/gywns6287/BAAM/blob/main/for_git/resutls.png)
+![table](https://github.com/gywns6287/BAAM/blob/main/for_git/table.png)
