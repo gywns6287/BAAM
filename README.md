@@ -32,4 +32,9 @@ python main.py
 ```
 
 ## Train
-To faster convergence, we use the pre-trainned COCO 2017 weights. You can downlod it from [hear](https://drive.google.com/file/d/1GZyzJLB3FTcs8C7MpZRQWw44liYPyOMD/edit).
+1. To faster convergence, we use the pre-trainned COCO 2017 weights. You can downlod it from [hear](https://drive.google.com/file/d/1GZyzJLB3FTcs8C7MpZRQWw44liYPyOMD/edit).
+2. Replace the first line of `configs/custom.yaml` - `best_rel_model.pth ` to `CenterNet2_R2-101-DCN-BiFPN_4x+4x_1560_ST.pth`.
+3. Run the command below.
+```
+python main.py -t
+```
