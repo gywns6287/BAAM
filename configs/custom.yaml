@@ -1,0 +1,41 @@
+_BASE_: "res2net-bifpn.yaml" 
+MODEL:
+  WEIGHTS: best_rel_model.pth #'CenterNet2_R2-101-DCN-BiFPN_4x+4x_1560_ST.pth'
+  DEVICE: 'cuda:0'
+  BACKBONE:
+    FREEZE_AT: 2
+  PROPOSAL_GENERATOR:
+    NAME: 'customRPN'
+  ROI_HEADS:
+    NAME: "BAAMROIHeads"
+    NUM_CLASSES: 79
+    NMS_THRESH_TEST: 0.7
+    SCORE_THRESH_TEST: 0.
+    POSITIVE_FRACTION: 0.5
+    IN_FEATURES: [ "p3", "p4", "p5", "p6", "p7"]
+  ROI_BOX_HEAD:
+    SMOOTH_L1_BETA: 0.5 
+    CLS_AGNOSTIC_BBOX_REG: True
+  KEYPOINT_ON: True
+  ROI_KEYPOINT_HEAD:
+    NUM_KEYPOINTS: 66
+  RPN:
+    POST_NMS_TOPK_TRAIN: 2000
+TEST:
+  DETECTIONS_PER_IMAGE: 1000
+SOLVER:
+  CHECKPOINT_PERIOD: 10200
+  BASE_LR: 0.0001
+
+# For large model
+  STEPS: (2040, 10200, 30600) # keypoints (2 epoch), 3d reconstruction (10 epoch), lr reduction (30 epoch).
+  MAX_ITER: 40800 # 1 epoch == (4077/batch) 
+  IMS_PER_BATCH: 4
+
+DATASETS:
+  TRAIN: ("./data/apollo/train",)
+  TEST: ("./data/apollo/val",)
+  RESIZE: (1355,1692) # (H, W)
+
+OUTPUT_DIR:
+  'outputs'
