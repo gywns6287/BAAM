@@ -44,8 +44,9 @@ python main.py -t
 2. move to `evaluation` folder.
 3. Run the comman below.
 ```
-python eval.py --light --test_dir ../outputs/res --gt_dir /data/apollo/val/apollo_annot --res_file test.txt
+python eval.py --light --test_dir ../outputs/res --gt_dir ../data/apollo/val/apollo_annot --res_file test_results.txt
 ```
+4. You can show A3DP results in `test_results.txt`.
 
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
