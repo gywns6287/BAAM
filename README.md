@@ -24,3 +24,9 @@ pip install "git+https://github.com/facebookresearch/pytorch3d.git"
 pip install -r requirement.txt
 ```
 3. Set data referring [here](https://github.com/gywns6287/BAAM/blob/main/for_git/directory.md).
+
+## Inference
+First install [pre-trained weights](https://drive.google.com/file/d/1oM-iA5Z-8AOBgX5hUCfAoLX8hcn4YBpp/view?usp=sharing) and run the command below.
+```
+python main.py
+```
