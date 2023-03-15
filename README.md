@@ -9,4 +9,5 @@ This repo is the official Code of  BAAM: Monocular 3D pose and shape reconstruct
 We recommend you to use an **Anaconda** virtual environment with **Python 3.9**.
 
 1. Install pytorch 1.10.1
+
 `conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge`
