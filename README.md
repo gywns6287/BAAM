@@ -32,9 +32,9 @@ python main.py
 ```
 
 ## Train
-1. To faster convergence, we first trained the 2D modules (Box, Keypoint) based on the pre-trainned COCO 2017 weights ([hear])(https://drive.google.com/file/d/1GZyzJLB3FTcs8C7MpZRQWw44liYPyOMD/edit).
-4. Replace the third line of `configs/custom.yaml` - `best_rel_model.pth` to `CenterNet2_R2-101-DCN-BiFPN_4x+4x_1560_ST.pth`.
-5. Run the command below.
+1. To stable model convergence, we first trained the 2D modules (Box, Keypoint) based on the pre-trainned [COCO 2017 weights](https://drive.google.com/file/d/1GZyzJLB3FTcs8C7MpZRQWw44liYPyOMD/edit). You can downlod pre-trained 2D module weights (res2net_bifpn.pth) in [hear](https://drive.google.com/drive/folders/1uuU1bTOzBCdD-FNhfqvMlj9Ff_tHkwtR).
+2. Replace the third line of `configs/custom.yaml` - `best_rel_model.pth` to `res2net_bifpn.pth`.
+3. Run the command below.
 ```
 python main.py -t
 ```
