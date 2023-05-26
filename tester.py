@@ -23,7 +23,7 @@ def test_model(cfg, model):
     os.makedirs(mesh_path, exist_ok=True)
         
     # Load test dataset
-    dataset = apollo_3dpose_loader(cfg.DATASETS.TEST[0])
+    dataset = apollo_3dpose_loader(cfg.DATASETS.TEST[0], eval=True)
     steps = math.ceil(len(dataset)/cfg.SOLVER.IMS_PER_BATCH)
     dataloader =  apollo_eval_loader(dataset, batch_size = cfg.SOLVER.IMS_PER_BATCH, steps = steps, resize = cfg.DATASETS.RESIZE)
 
