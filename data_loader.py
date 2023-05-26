@@ -11,55 +11,60 @@ from detectron2.data import detection_utils as utils
 from detectron2.structures import BoxMode, Instances, Boxes, Keypoints
 
 
-def apollo_3dpose_loader(data_path, pose_key = True):
+def apollo_3dpose_loader(data_path, eval=False):
 
-    # Load gt verts
-    deform_path = 'apollo_deform'
-    verts = {}
-    for i in range(79):
-        vert, _,  _ = load_obj(opj(deform_path,f'{i}.obj'))
-        verts[i] = vert.unsqueeze(0)
+    if not eval:
+        # Load gt verts
+        deform_path = 'apollo_deform'
+        verts = {}
+        for i in range(79):
+            vert, _,  _ = load_obj(opj(deform_path,f'{i}.obj'))
+            verts[i] = vert.unsqueeze(0)
 
     # label and img path
     label_path = opj(data_path, 'apollo_annot')
     img_path = opj(data_path,'images')
-    files = [i.split('.')[0] for i in os.listdir(label_path)]
+    files = [i.split('.')[0] for i in os.listdir(img_path)]
 
     print('Loading the dataset')
     data = []
     for id, file in tqdm(enumerate(files), total=len(files)):
 
+        # image setting
         new_labels = {}
-        labels = json.load(open(opj(label_path, file+'.json')))
-        
         new_labels['file_name'] = opj(img_path,file+'.jpg')
         new_labels['height'] = 2710
         new_labels['width'] = 3384
         new_labels['image_id'] = file
 
-        annotations = []
-        for label in labels:
+        if not eval:
+            # load label
+            labels = json.load(open(opj(label_path, file+'.json')))
+            annotations = []
+            for label in labels:
 
-            # exclude noise data
-            if label['pose'][-1] > 300:
-                continue
+                # exclude noise data
+                if label['pose'][-1] > 300:
+                    continue
 
-            # Load labels
-            annotation = {}
-            # load 2d labels
-            annotation['bbox'] = label['bbox']
-            annotation['bbox_mode'] = BoxMode.XYXY_ABS
-            annotation['category_id'] = label["car_id"]
-            annotation['keypoints'] = label['keypoints']
-            # load 3d labels
-            annotation['trans'] = label['pose'][3:]
-            annotation['rotate'] = label['pose'][:3]
-            # load verts
-            annotation['verts'] = verts[label['car_id']]
+                # Load labels
+                annotation = {}
+                # load 2d labels
+                annotation['bbox'] = label['bbox']
+                annotation['bbox_mode'] = BoxMode.XYXY_ABS
+                annotation['category_id'] = label["car_id"]
+                annotation['keypoints'] = label['keypoints']
+                # load 3d labels
+                annotation['trans'] = label['pose'][3:]
+                annotation['rotate'] = label['pose'][:3]
+                # load verts
+                annotation['verts'] = verts[label['car_id']]
 
-            annotations.append(annotation)
+                annotations.append(annotation)
 
-        new_labels['annotations'] = annotations
+            new_labels['annotations'] = annotations
+        else:
+            new_labels['annotations'] = []
         data.append(new_labels)
 
     return data
@@ -164,10 +169,10 @@ def apollo_eval_loader(dataset, batch_size = 8, steps = None, resize = (1355,169
             image = torch.from_numpy(auginput.image.astype("float32").transpose(2, 0, 1)) 
 
             # RESIZE LABELS (BBOX, KEYPOINTS)
-            annos = [
-                utils.transform_instance_annotations(annotation, [transform], image.shape[1:])
-                for annotation in b['annotations']
-            ]
+            # annos = [
+            #     utils.transform_instance_annotations(annotation, [transform], image.shape[1:])
+            #     for annotation in b['annotations']
+            # ]
 
             output = {
                 # create the format that the model expects
@@ -175,7 +180,7 @@ def apollo_eval_loader(dataset, batch_size = 8, steps = None, resize = (1355,169
                 'width': b["width"],
                 'height': b["height"],
                 'filename': b["image_id"],
-                "instances": annotations_to_instances(annos, image.shape[1:])
+                # "instances": annotations_to_instances(annos, image.shape[1:])
             }
 
             outputs.append(output)
