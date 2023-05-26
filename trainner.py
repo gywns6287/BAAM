@@ -24,6 +24,7 @@ import numpy as np
 import cv2
 
 p3d_weights = {
+    'loss_keypoint':0.1,
     'loss_rotate': 1, 'loss_trans': 0.5, 'loss_mesh':3, 
     'loss_R': 0.1, 'loss_T': 0.01,  'loss_RT': 0.01
     }
@@ -34,7 +35,7 @@ def train_model(cfg, model, eval = False):
     model.train()
 
     # Load optimizer
-    optimizer = optim.AdamW(model.parameters(), lr = cfg.SOLVER.BASE_LR)
+    optimizer = optim.AdamW(model.parameters(), lr = cfg.SOLVER.HEAD3D_LR)
 
     # Load logger
     checkpointer = DetectionCheckpointer(model, cfg.OUTPUT_DIR, optimizer=optimizer)
@@ -60,9 +61,9 @@ def train_model(cfg, model, eval = False):
     model.roi_heads.rx = cfg.DATASETS.RESIZE[1]/dataset[0]['width']
     model.roi_heads.ry = cfg.DATASETS.RESIZE[0]/dataset[0]['height']
 
+    # Train setting
     epoch_iter = math.ceil((len(dataset)/cfg.SOLVER.IMS_PER_BATCH))
-    train_3d = False
-    train_key = False
+
     print("{} iters per epoch".format(epoch_iter))
     with EventStorage(start_iter) as storage:
         step_timer = Timer()
@@ -76,12 +77,10 @@ def train_model(cfg, model, eval = False):
             iteration = iteration + 1
             storage.step()
 
-            if  iteration == cfg.SOLVER.STEPS[2]:
+            if  iteration == cfg.SOLVER.STEPS[0]:
                 for g in optimizer.param_groups : g ['lr'] *= 0.1
-            if iteration == cfg.SOLVER.STEPS[1]:
-                train_3d = True
-            if iteration == cfg.SOLVER.STEPS[0]:
-                train_key = True
+
+
             # calculate losses
             loss_dict = model(data, train_3d=train_3d, train_key=train_key)
             # mulyiply balancing parameters
@@ -104,6 +103,7 @@ def train_model(cfg, model, eval = False):
             losses.backward()
             optimizer.step()
 
+            
             #recode learning rate
             storage.put_scalar("lr", optimizer.param_groups[0]["lr"], smoothing_hint=False) 
 
