@@ -28,8 +28,8 @@ SOLVER:
   BASE_LR: 0.0001
 
 # For large model
-  STEPS: (3060, 10200, 30600) # keypoints (2 epoch), 3d reconstruction (10 epoch), lr reduction (30 epoch).
-  MAX_ITER: 40800 # 1 epoch == (4077/batch) 
+  STEPS: (20400, ) #(20400, 40800, 61200) # keypoint (20), 3d reconstruction (40), lr reduction (50).
+  MAX_ITER: 30600 #71400 # 1 epoch == (4077/batch) 
   IMS_PER_BATCH: 4
 
 DATASETS:
