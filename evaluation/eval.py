@@ -18,6 +18,12 @@ from collections import OrderedDict
 import pickle as pkl
 from tqdm import tqdm
 from pytorch3d.io import load_obj, save_obj
+from pytorch3d.renderer import (
+    FoVPerspectiveCameras, RasterizationSettings, MeshRenderer, look_at_view_transform,
+    MeshRasterizer, BlendParams, SoftSilhouetteShader, TexturesVertex
+)
+import torch
+from pytorch3d.structures import Meshes
 opj = os.path.join
 
 
@@ -272,18 +278,6 @@ class Detect3DEval(object):
         a = np.array([False for d in dt]).reshape((1, len(dt)))
 
         # store results for given image and category
-        # return {
-        #         'image_id':     image_name,
-        #         'aRng':         aRng,
-        #         'maxDet':       maxDet,
-        #         'dtIds':        [d['id'] for d in dt],
-        #         'gtIds':        [g['id'] for g in gt],
-        #         'dtMatches':    dtm,
-        #         'gtMatches':    gtm,
-        #         'dtScores':     [d['score'] for d in dt],
-        #         'gtIgnore':     gtIg,
-        #         'dtIgnore':     dtIg,
-        #     }
         return {
                 'image_id':     image_name,
                 'maxDet':       maxDet,
@@ -542,13 +536,49 @@ class Detect3DEval(object):
         print('Load car models....(it trakes some minutes)')
         ids = json.load(open('id_to_abb.json'))
 
+        # redering setting
+
+        # cameras = FoVPerspectiveCameras(device = 'cuda')
+        # blend_params = BlendParams(sigma=1e-4, gamma=1e-4)
+        # raster_settings = RasterizationSettings(
+        # image_size=1280, 
+        # blur_radius=np.log(1. / 1e-4 - 1.) * blend_params.sigma, 
+        # faces_per_pixel=100, 
+        # )
+
+        # silhouette_renderer = MeshRenderer(
+        # rasterizer=MeshRasterizer(
+        #     cameras=cameras, 
+        #     raster_settings=raster_settings
+        # ),
+        # shader=SoftSilhouetteShader(blend_params=blend_params)
+        # )
+
         for model in tqdm(ids.keys()):
             
+            # car_model = f'apollo_deform/{model}.obj'
+            # vert, face, _ = load_obj(car_model)
+            # vert[:, [0, 1]] *= -1
+            # # vert = np.array(vert)
+            # # face = np.array(face.verts_idx) + 1
+            # face = face.verts_idx
+
+            # verts_rgb = torch.ones_like(vert.unsqueeze(0))
+            # textures = TexturesVertex(verts_features=verts_rgb)
+            # mesh = Meshes(verts=vert.cuda().unsqueeze(0), faces=face.cuda().unsqueeze(0), textures=textures)
+            # for i, r in enumerate(np.linspace(-np.pi, np.pi, num=100)):
+                
+            #     R, T = look_at_view_transform(3, azim=r, device='cuda', degrees=False)
+            #     # call true mask
+            #     mask = silhouette_renderer(meshes_world=mesh, R=R, T=T).cpu().numpy()[0][...,3]
+            #     cv2.imwrite(f'2rot100/{model}rot{i}.png',mask*255)
+                
+
             if args.light:
                 # Load mask directly
                 masks = np.zeros((10,128,128))
                 for i in range(0,10):
-                    mask = cv2.imread('rot10/{0}rot{1}.png'.format(model,i))
+                    mask = cv2.imread('2rot10/{0}rot{1}.png'.format(model,i))
                     mask = mask[...,0]/255
                     masks[i] = mask
                 self.car_models[int(model)] = masks
@@ -561,7 +591,7 @@ class Detect3DEval(object):
                 self.car_models[int(model)] = masks
 
         gsnet_mesh = load_obj('../apollo_deform/0.obj')
-        self.car_models_face = gsnet_mesh[1].verts_idx.numpy() + 1
+        self.car_models_face = gsnet_mesh[1].verts_idx.numpy()
 
     def __str__(self):
         self.summarize()
