@@ -35,7 +35,7 @@ def train_model(cfg, model, eval = False):
     model.train()
 
     # Load optimizer
-    optimizer = optim.AdamW(model.parameters(), lr = cfg.SOLVER.HEAD3D_LR)
+    optimizer = optim.AdamW(model.parameters(), lr = cfg.SOLVER.BASE_LR)
 
     # Load logger
     checkpointer = DetectionCheckpointer(model, cfg.OUTPUT_DIR, optimizer=optimizer)
