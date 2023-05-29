@@ -105,7 +105,6 @@ def train_model(cfg, model, eval = False):
             losses.backward()
             optimizer.step()
 
-            
             #recode learning rate
             storage.put_scalar("lr", optimizer.param_groups[0]["lr"], smoothing_hint=False) 
 
