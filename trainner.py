@@ -46,6 +46,8 @@ def train_model(cfg, model, eval = False):
     )
     writers = default_writers(cfg.OUTPUT_DIR, max_iter) if comm.is_main_process() else []
 
+    checkpointer.save('res2net_bifpn_light.pth')
+
     # Load train data
     dataset = apollo_3dpose_loader(cfg.DATASETS.TRAIN[0])
     data_loader = build_detection_train_loader(
@@ -82,7 +84,7 @@ def train_model(cfg, model, eval = False):
 
 
             # calculate losses
-            loss_dict = model(data, train_3d=train_3d, train_key=train_key)
+            loss_dict = model(data)
             # mulyiply balancing parameters
             
             for k in loss_dict.keys():
