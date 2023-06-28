@@ -54,9 +54,13 @@ python eval.py --light --test_dir ../outputs/res --gt_dir ../data/apollo/val/apo
 pip install open3d==0.14.1
 ```
 **note** must use version 0.14.1 
+
 2. Move to 'vis' folder.
 3. Run the command below.
-
+```
+python vis_apollo.py --output [path where the results are saved] --file [file name to vis] --save [path to save vis results]
+python vis_apollo.py --output ../outputs --file 171206_081122658_Camera_5 --save vis_results #example
+```
 
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
