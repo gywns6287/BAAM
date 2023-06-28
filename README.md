@@ -61,6 +61,7 @@ pip install open3d==0.14.1
 python vis_apollo.py --output [path where the results are saved] --file [file name to vis] --save [path to save vis results]
 python vis_apollo.py --output ../outputs --file 171206_081122658_Camera_5 --save vis_results #example
 ```
+4. To handle open3D UI, please refer [here](http://www.open3d.org/docs/latest/tutorial/visualization/visualization.html).
 
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
