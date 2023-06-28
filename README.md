@@ -51,3 +51,7 @@ python eval.py --light --test_dir ../outputs/res --gt_dir ../data/apollo/val/apo
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
 ![table](https://github.com/gywns6287/BAAM/blob/main/for_git/table.png)
+
+## License
+
+A MIT license is used for this repository. Note that the used dataset (ApolloCar3D) is subject to their respective licenses and may not grant commercial use.
