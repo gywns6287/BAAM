@@ -62,6 +62,9 @@ python vis_apollo.py --output [path where the results are saved] --file [file na
 python vis_apollo.py --output ../outputs --file 171206_081122658_Camera_5 --save vis_results #example
 ```
 4. You can see a manual to handle open3D UI [here](http://www.open3d.org/docs/latest/tutorial/visualization/visualization.html).
+5. You can see the vis results at [save] path.
+   - dfs
+   - sdfsdf 
 
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
