@@ -41,12 +41,22 @@ python main.py -t
 
 ## Evaluation
 1. Finish either inference process or train process.
-2. move to `evaluation` folder.
-3. Run the comman below.
+2. Move to `evaluation` folder.
+3. Run the command below.
 ```
 python eval.py --light --test_dir ../outputs/res --gt_dir ../data/apollo/val/apollo_annot --res_file test_results.txt
 ```
 4. You can show A3DP results in `test_results.txt`.
+
+## Visualization
+1. Install open3D python library
+```
+pip install open3d==0.14.1
+```
+**note** must use version 0.14.1 
+2. Move to 'vis' folder.
+3. Run the command below.
+
 
 ## Results
 We achieved the state-of-the art on Apollocar3D dataset.
