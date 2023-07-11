@@ -3,7 +3,7 @@
 ![sample](https://github.com/gywns6287/BAAM/blob/main/for_git/resutls.png)
 
 ## Introduction
-This repo is the official Code of  BAAM: Monocular 3D pose and shape reconstruction with bi-contextual attention module and attention-guided modeling (**CVPR 2023**). [paper](https://openaccess.thecvf.com/content/CVPR2023/html/Lee_BAAM_Monocular_3D_Pose_and_Shape_Reconstruction_With_Bi-Contextual_Attention_CVPR_2023_paper.html)
+This repo is the official Code of  BAAM: Monocular 3D pose and shape reconstruction with bi-contextual attention module and attention-guided modeling (**CVPR 2023**). [[Paper]](https://openaccess.thecvf.com/content/CVPR2023/html/Lee_BAAM_Monocular_3D_Pose_and_Shape_Reconstruction_With_Bi-Contextual_Attention_CVPR_2023_paper.html)
 
 ## Installation
 We recommend you to use an **Anaconda** virtual environment with **Python 3.9**. 
